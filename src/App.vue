@@ -11,6 +11,7 @@
         :resources="resources"
         @delete-resource="deleteResource"
         @add-resource="addResource"
+        @active-component="toggleComponent"
       />
     </KeepAlive>
   </main>
@@ -50,7 +51,7 @@
     },
     methods: {
       addResource(enteredData) {
-        this.resources.push({
+        this.resources.unshift({
           id: this.resources.length + 1,
           ...enteredData
         })
@@ -66,6 +67,10 @@
 </script>
 
 <style>
+  * {
+    box-sizing: border-box;
+  }
+
   html {
     font-family: sans-serif;
   }

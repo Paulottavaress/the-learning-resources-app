@@ -52,7 +52,7 @@
 <style scoped>
   button {
     height: 50px;
-    min-width: 150px;
+    width: 150px;
     cursor: pointer;
     color: rgba(53, 11, 80, 1);
     border: none;
