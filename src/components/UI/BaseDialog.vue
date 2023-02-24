@@ -1,20 +1,24 @@
 <template>
   <teleport to="body">
-    <div class="overlay" :style="{display: isDialogOpen ? 'block' : 'none'}"></div>
+    <div
+      v-if="isDialogOpen"
+      class="overlay"
+      @click="this.$emit('close-dialog')"
+    ></div>
+    <dialog :open="isDialogOpen">
+      <header>
+        <slot name="header"></slot>
+      </header>
+      <div>
+        <slot></slot>
+        <BaseButton
+          @click="this.$emit('close-dialog')"
+          :isAlwaysActive="true"
+          class="confirm-btn"
+        >Okay</BaseButton>
+      </div>
+    </dialog>
   </teleport>
-  <dialog :open="isDialogOpen">
-    <header>
-      <slot name="header"></slot>
-    </header>
-    <div>
-      <slot></slot>
-      <BaseButton
-        @click="this.$emit('close-dialog')"
-        :isAlwaysActive="true"
-        class="confirm-btn"
-      >Okay</BaseButton>
-    </div>
-  </dialog>
 </template>
 
 <script>
@@ -73,6 +77,6 @@
     z-index: 100;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(0, 0, 0, 0.75);
   }
 </style>

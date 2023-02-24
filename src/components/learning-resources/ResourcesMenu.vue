@@ -14,8 +14,8 @@
 </template>
 
 <script>
-  import BaseButton from './UI/BaseButton.vue';
-  import BaseCard from './UI/BaseCard.vue';
+  import BaseButton from '../UI/BaseButton.vue';
+  import BaseCard from '../UI/BaseCard.vue';
 
   export default { 
     components: { 

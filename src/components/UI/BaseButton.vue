@@ -1,5 +1,5 @@
 <template>
-  <button :type='btnType' ref="baseButton">
+  <button ref="baseButton">
     <slot></slot>
   </button>
 </template>
@@ -23,7 +23,8 @@
     props: {
       btnName: {
         type: String,
-        required: true
+        required: false,
+        default: ''
       },
       selectedComponent: {
         type: String,
@@ -34,11 +35,6 @@
         type: Boolean,
         required: false,
         default: false
-      },
-      btnType: {
-        type: String,
-        required: false,
-        default: 'button'
       }
     },
     watch: {

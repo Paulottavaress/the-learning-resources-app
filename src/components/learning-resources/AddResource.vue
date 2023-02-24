@@ -1,19 +1,19 @@
 <template>
   <BaseCard>
-      <form @submit.prevent="addResource">
+      <form @submit.prevent="submitForm">
         <div>
-          <label>Title</label>
-          <input ref="titleField">
+          <label for="title-field">Title</label>
+          <input id="title-field" name="title-field" ref="titleField">
         </div>
         <div>
-          <label>Description</label>
-          <textarea ref="descriptionField"></textarea>
+          <label for="description-field">Description</label>
+          <textarea id="description-field" name="description-field" ref="descriptionField"></textarea>
         </div>
         <div>
-          <label>Link</label>
-          <input ref="urlField">
+          <label for="url-field">Link</label>
+          <input id="url-field" name="url-field" ref="urlField">
         </div>
-        <BaseButton :isAlwaysActive="true" :btnType="'submit'">Add Resource</BaseButton>
+        <BaseButton :isAlwaysActive="true" type="submit">Add Resource</BaseButton>
       </form>
   </BaseCard>
   <BaseDialog :isDialogOpen="isDialogOpen" @close-dialog="closeDialog">
@@ -28,9 +28,9 @@
 </template>
 
 <script>
-  import BaseButton from './UI/BaseButton.vue';
-  import BaseCard from './UI/BaseCard.vue';
-  import BaseDialog from './UI/BaseDialog.vue';
+  import BaseButton from '../UI/BaseButton.vue';
+  import BaseCard from '../UI/BaseCard.vue';
+  import BaseDialog from '../UI/BaseDialog.vue';
 
   export default {
     components: {
@@ -43,28 +43,38 @@
         isDialogOpen: false
       }
     },
-    emits: [
-      'add-resource',
-      'active-component'
-    ],
+    inject: {
+      addResource: {
+        type: Object,
+        required: true
+      },
+      toggleComponent: {
+        type: Function,
+        required: true
+      }
+    },
     methods: {
-      addResource() {
+      submitForm() {
         const enteredTitle = this.$refs.titleField.value;
         const enteredDescription= this.$refs.descriptionField.value;
         const enteredUrl = this.$refs.urlField.value;
 
-        if (!enteredTitle || !enteredDescription || !enteredUrl) {
+        if (
+          enteredTitle.trim() === '' || 
+          enteredDescription === '' || 
+          enteredUrl === ''
+        ) {
           this.isDialogOpen = true;
           return;
         }
 
-        this.$emit('add-resource', {
+        this.addResource({
           title: enteredTitle,
           description: enteredDescription,
           url: enteredUrl
         });
 
-        this.$emit('active-component', 'stored-resources');
+        this.toggleComponent('stored-resources');
       },
       closeDialog() {
         this.isDialogOpen = false;

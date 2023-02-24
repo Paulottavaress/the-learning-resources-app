@@ -2,7 +2,7 @@
   <BaseCard v-for="resource in resources" :key="resource.id">
     <header>
       <h2>{{ resource.title }}</h2>
-      <button @click="this.$emit('delete-resource', resource.id)">Delete</button>
+      <button @click="deleteResource(resource.id)">Delete</button>
     </header>
     <h3>{{resource.description }}</h3>
     <a :href="resource.url"><h3>View Resource</h3></a>
@@ -10,16 +10,19 @@
 </template>
 
 <script>
-  import BaseCard from './UI/BaseCard.vue';
+  import BaseCard from '../UI/BaseCard.vue';
 
   export default {
     components: {
       BaseCard
     },
-    emits: ['delete-resource'],
-    props: {
+    inject: {
       resources: {
         type: Object,
+        required: true
+      },
+      deleteResource: {
+        type: Function,
         required: true
       }
     }
